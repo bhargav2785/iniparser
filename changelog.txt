@@ -1,0 +1,3 @@
+add php composer
+license
+hook up with github build
