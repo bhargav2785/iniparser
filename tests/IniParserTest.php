@@ -5,20 +5,20 @@
  *              Initial change
  */
 
-require_once '../source/IniParser.php';
+require_once 'source/IniParser.php';
 
 class IniParserTest extends PHPUnit_Framework_TestCase
 {
 
 	private $files = array(
-		'simple'      => '../tests/ini_files/simple.ini',
-		'global'      => '../tests/ini_files/global.ini',
-		'comments'    => '../tests/ini_files/comments.ini',
-		'inheritance' => '../tests/ini_files/inheritance.ini',
-		'array'       => '../tests/ini_files/array.ini',
-		'bad'         => '../tests/ini_files/bad.ini',
-		'escape'      => '../tests/ini_files/escape.ini',
-		'json'        => '../tests/ini_files/json.ini',
+		'simple'      => 'tests/ini_files/simple.ini',
+		'global'      => 'tests/ini_files/global.ini',
+		'comments'    => 'tests/ini_files/comments.ini',
+		'inheritance' => 'tests/ini_files/inheritance.ini',
+		'array'       => 'tests/ini_files/array.ini',
+		'bad'         => 'tests/ini_files/bad.ini',
+		'escape'      => 'tests/ini_files/escape.ini',
+		'json'        => 'tests/ini_files/json.ini',
 	);
 	private $data;
 
