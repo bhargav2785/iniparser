@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/bhargav2785/iniparser.png)](https://travis-ci.org/bhargav2785/iniparser)
+
 IniParser
 =========
 
