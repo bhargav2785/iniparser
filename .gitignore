@@ -4,3 +4,7 @@
 .idea/.name
 
 *.xml
+
+*.lock
+
+vendor/*

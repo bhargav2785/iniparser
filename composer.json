@@ -1,0 +1,17 @@
+{
+	"name": "bhargav2785/iniparser",
+	"type": "library",
+	"description": "PHP ini file parser.",
+	"keywords": ["iniparser", "php"],
+	"authors": [
+		{
+			"name": "Bhargav Vadher"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~4.0"
+	}
+}
