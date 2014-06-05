@@ -20,10 +20,10 @@ echo "Using IniParser: " . $data['json']['list']['creditcards']['amex']['prefix'
 
 Using IniFetcher(preferable)
 ----------------------------
-<code>
+```php
 $fetcher = IniFetcher::getInstance($fileJson);
 echo "Using IniFetcher: " . $fetcher::get('json.list.creditcards.amex.prefix');
-</code>
+```
 
 Support
 =======
@@ -34,14 +34,14 @@ Inheritance
 In your ini file you can have a section can inherit properties from other section. The syntax for that is `[childSection : parentSection]`.
 See below the example for inheritance in ini file.
 
-`ini
+```ini
 [parent]
 key1 = parentValue1
 key3 = parentValue3
 [child : parent]
 key1 = childValue1
 key2 = childValue2
-`
+```
 
 Each properties from the parent section will get extended into the child section. If the key name is similar, child section key
 overrides parent section key. Please note that the parent section needs to declared before the child section because we can
