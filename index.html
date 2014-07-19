@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Iniparser by bhargav2785</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Iniparser</h1>
+        <h2>PHP ini file parser</h2>
+        <a href="https://github.com/bhargav2785/iniparser" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h2>
+<a name="build-status" class="anchor" href="#build-status"><span class="octicon octicon-link"></span></a>Build Status</h2>
+
+<p><a href="https://travis-ci.org/bhargav2785/iniparser"><img src="https://secure.travis-ci.org/bhargav2785/iniparser.png" alt="Build Status"></a></p>
+
+<h1>
+<a name="iniparser" class="anchor" href="#iniparser"><span class="octicon octicon-link"></span></a>IniParser</h1>
+
+<p>IniParser is a library that allows user to parse the ini file and outputs result into a meaningful array syntax. IniFetcher
+is a wrapper around IniParser which does two thing; it invokes IniParser and parses the ini file, and it provides a getter
+method to access ini property easily.</p>
+
+<h1>
+<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example Usage</h1>
+
+<p>There are two ways you can access ini file values using this library.</p>
+
+<h2>
+<a name="using-iniparser-class" class="anchor" href="#using-iniparser-class"><span class="octicon octicon-link"></span></a>Using IniParser class</h2>
+
+<div class="highlight highlight-php"><pre><span class="nv">$parser</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">IniParser</span><span class="p">(</span><span class="nv">$fileJson</span><span class="p">);</span>
+<span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setFormat</span><span class="p">(</span><span class="nv">$parser</span><span class="o">::</span><span class="na">OUTPUT_FORMAT_ARRAY</span><span class="p">);</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">parse</span><span class="p">();</span>
+<span class="k">echo</span> <span class="s2">"Using IniParser: "</span> <span class="o">.</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">'json'</span><span class="p">][</span><span class="s1">'list'</span><span class="p">][</span><span class="s1">'creditcards'</span><span class="p">][</span><span class="s1">'amex'</span><span class="p">][</span><span class="s1">'prefix'</span><span class="p">]</span> <span class="o">.</span> <span class="s1">'&lt;br/&gt;'</span><span class="p">;</span>
+</pre></div>
+
+<h2>
+<a name="using-inifetcherpreferable" class="anchor" href="#using-inifetcherpreferable"><span class="octicon octicon-link"></span></a>Using IniFetcher(preferable)</h2>
+
+<div class="highlight highlight-php"><pre><span class="nv">$fetcher</span> <span class="o">=</span> <span class="nx">IniFetcher</span><span class="o">::</span><span class="na">getInstance</span><span class="p">(</span><span class="nv">$fileJson</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"Using IniFetcher: "</span> <span class="o">.</span> <span class="nv">$fetcher</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="s1">'json.list.creditcards.amex.prefix'</span><span class="p">);</span>
+</pre></div>
+
+<h1>
+<a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h1>
+
+<p>IniParser supports various syntax in ini file. See below for supported syntax.</p>
+
+<h2>
+<a name="inheritance" class="anchor" href="#inheritance"><span class="octicon octicon-link"></span></a>Inheritance</h2>
+
+<p>In your ini file you can have a section can inherit properties from other section. The syntax for that is <code>[childSection : parentSection]</code>.
+See below the example for inheritance in ini file.</p>
+
+<div class="highlight highlight-ini"><pre><span class="c1">; For inheritance to work in ini files parent must be defined</span>
+<span class="c1">; as a section before its child is defined. In other words parent</span>
+<span class="c1">; needs to go on top and child needs to be at bottom.</span>
+
+<span class="c1">; default set of properties</span>
+<span class="k">[common]</span>
+<span class="na">section</span> <span class="o">=</span> <span class="s">common</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">parent</span>
+<span class="na">site.url</span> <span class="o">=</span> <span class="s">http://example.com</span>
+
+<span class="c1">; prod extends common and overrides same property found in common</span>
+<span class="k">[prod : common]</span>
+<span class="na">section</span> <span class="o">=</span> <span class="s">prod</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">child</span>
+<span class="na">site.url</span> <span class="o">=</span> <span class="s">http://prod.example.com</span>
+
+<span class="c1">; test extends common and overrides same property found in common</span>
+<span class="k">[test : common]</span>
+<span class="na">section</span> <span class="o">=</span> <span class="s">test</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">child</span>
+<span class="na">site.url</span> <span class="o">=</span> <span class="s">http://test.example.com</span>
+
+<span class="c1">; dev extends common and overrides same property found in common</span>
+<span class="k">[dev : common]</span>
+<span class="na">section</span> <span class="o">=</span> <span class="s">dev</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">child</span>
+<span class="na">site.url</span> <span class="o">=</span> <span class="s">http://dev.example.com</span>
+
+<span class="c1">; 'bhargav' extends dev and overrides same property found in dev</span>
+<span class="k">[bhargav : dev]</span>
+<span class="na">section</span> <span class="o">=</span> <span class="s">bhargav</span>
+
+<span class="c1">; lazydev is an alias of dev since it doesn't contain any self property</span>
+<span class="k">[lazydev : dev]</span>
+</pre></div>
+
+<p>Each properties from the parent section will get extended into the child section. If the key name is similar, child section key
+overrides parent section key. Please note that the parent section needs to declared before the child section because we can
+not control the ordering of ini file section. Also multiple inheritance is not supported.</p>
+
+<h2>
+<a name="global-properties" class="anchor" href="#global-properties"><span class="octicon octicon-link"></span></a>Global properties</h2>
+
+<p>If the key value pair is defined without any section name, it will be considered in a global section. This is particularly useful
+in a situation when you are not sure about where to put the entry.</p>
+
+<div class="highlight highlight-ini"><pre><span class="na">system.section</span> <span class="o">=</span> <span class="s">global</span>
+<span class="na">system.includePath.public</span> <span class="o">=</span> <span class="s">"public/global"</span>
+<span class="na">system.includePath.components</span> <span class="o">=</span> <span class="s">"components/"</span>
+<span class="na">system.phpSettings.display_errors</span> <span class="o">=</span> <span class="s">0</span>
+<span class="na">system.phpSettings.display_warning</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">site.url</span> <span class="o">=</span> <span class="s">http://bhargavvadher.com/about</span>
+<span class="k">[section]</span>
+<span class="na">key1</span> <span class="o">=</span> <span class="s">parentValue1</span>
+<span class="na">key3</span> <span class="o">=</span> <span class="s">parentValue3</span>
+</pre></div>
+
+<h2>
+<a name="array-literals" class="anchor" href="#array-literals"><span class="octicon octicon-link"></span></a>Array literals</h2>
+
+<p>IniParser supports array literals. That means you can pass in values in an array literal for a key. This is particularly
+useful when you have multiple possible values for a given key e.g all admin users as in <code>system.admins = [user1,user2,user3]</code>.
+If you have inheritance with array literals, the child class will have priority over the parent class as explained in the
+example below.</p>
+
+<div class="highlight highlight-ini"><pre><span class="c1">; example of a array like literal's ini file</span>
+
+<span class="c1">; some global just for fun</span>
+<span class="na">site.url.primary</span> <span class="o">=</span> <span class="s">'http://bhargavvadher.com'</span>
+<span class="na">site.url.secondary</span> <span class="o">=</span> <span class="s">'http://bhargav.me'</span>
+
+<span class="k">[array]</span>
+<span class="na">system.users</span> <span class="o">=</span> <span class="s">[user1,user2,user3]</span>
+<span class="na">system.section</span> <span class="o">=</span> <span class="s">[prod]</span>
+<span class="na">system.admins</span> <span class="o">=</span> <span class="s">['user1',user2,1234,12.34]</span>
+
+<span class="k">[empty1]</span>
+<span class="k">[empty2 : empty1]</span>
+<span class="k">[empty3]</span>
+</pre></div>
+
+<p>Please note that all empty section in an ini file will be ignored. In above example all <code>empty1</code>, <code>empty2</code> and <code>empty3</code>
+will be ignored because both <code>empty1</code> and <code>empty3</code> are actually empty and <code>empty2</code> is extending <code>empty1</code> but again the
+section after the inheritance is empty.</p>
+
+<h2>
+<a name="comments" class="anchor" href="#comments"><span class="octicon octicon-link"></span></a>Comments</h2>
+
+<p>Comments are not parsed but it is rather important part of an ini file. It helps documenting ini correctly for future
+use. IniParser provides variety of comment styles as shown in below example. Note that none of those comment lines will
+be parsed into a value.</p>
+
+<div class="highlight highlight-ini"><pre><span class="c1">; prod only properties</span>
+<span class="k">[prod]</span>
+<span class="na">system.section</span> <span class="o">=</span> <span class="s">prod</span>
+
+<span class="c1">; test only properties</span>
+<span class="k">[test : prod]</span>
+<span class="na">system.section</span> <span class="o">=</span> <span class="s">test</span>
+
+<span class="c1">; dev only properties</span>
+<span class="k">[dev : test]</span>
+<span class="na">system.section</span> <span class="o">=</span> <span class="s">dev</span>
+
+<span class="c1">; # tab comment, php will ignore this</span>
+<span class="c1">#   space comment</span>
+<span class="c1">#        tab-space comment</span>
+<span class="c1">###   multiple hash comment</span>
+<span class="c1">#   comment starting and ending with hash #</span>
+
+<span class="c1">############################################################################</span>
+<span class="c1">################   @author Bhargav Vadher           ########################</span>
+<span class="c1">################   @site http://bhargavvadher.com   ########################</span>
+<span class="c1">############################################################################</span>
+</pre></div>
+
+<p>All the lines that starts with <code>;</code> or <code>#</code> will be considered as a comment and will not be parsed. After the first pass
+of parsing the ini would look something like below. Note that empty lines will be ignored as well.</p>
+
+<div class="highlight highlight-ini"><pre><span class="k">[prod]</span>
+<span class="na">system.section</span> <span class="o">=</span> <span class="s">prod</span>
+<span class="k">[test : prod]</span>
+<span class="na">system.section</span> <span class="o">=</span> <span class="s">test</span>
+<span class="k">[dev : test]</span>
+<span class="na">system.section</span> <span class="o">=</span> <span class="s">dev</span>
+</pre></div>
+
+<h2>
+<a name="json-string" class="anchor" href="#json-string"><span class="octicon octicon-link"></span></a>Json string</h2>
+
+<p>This is pretty useful when you have a json structure of values that you want to use in your config system. Use case will
+be lets say you have a job that gets configuration fields from database on each deployment and then creates a json out
+of it. Now you can use that json blob directly into the ini files and IniParser will break it down into multi dimensional
+array like structure. Please see below example for more detail.</p>
+
+<div class="highlight highlight-ini"><pre><span class="c1"># global json property section</span>
+<span class="k">[json]</span>
+<span class="na">list</span> <span class="o">=</span> <span class="s">'{</span>
+<span class="s">    "colors" : [</span>
+<span class="s">        {</span>
+<span class="s">            "colorName" : "red",</span>
+<span class="s">            "hexValue" : "#f00"</span>
+<span class="s">        },</span>
+<span class="s">        {</span>
+<span class="s">            "colorName" : "green",</span>
+<span class="s">            "hexValue" : "#0f0"</span>
+<span class="s">        },</span>
+<span class="s">        {</span>
+<span class="s">            "colorName" : "blue",</span>
+<span class="s">            "hexValue" : "#00f"</span>
+<span class="s">        }</span>
+<span class="s">    ],</span>
+<span class="s">    "creditcards" : {</span>
+<span class="s">        "amex" : {"name": "American Express","prefix": "34","length": 15},</span>
+<span class="s">        "bankcard" : {"name": "Bankcard","prefix": "5610","length": 16},</span>
+<span class="s">        "chinaunion" : {"name": "China UnionPay","prefix": "62","length": 16},</span>
+<span class="s">        "dccarte" : {"name": "Diners Club Carte Blanche","prefix": "300","length": 14},</span>
+<span class="s">        "dcenroute" : {"name": "Diners Club enRoute","prefix": "2014","length": 15},</span>
+<span class="s">        "dcintl" : {"name": "Diners Club International","prefix": "36","length": 14},</span>
+<span class="s">        "dcusc" : {"name": "Diners Club United States &amp; Canada","prefix": "54","length": 16},</span>
+<span class="s">        "discover" : {"name": "Discover Card","prefix": "6011","length": 16},</span>
+<span class="s">        "instapay" : {"name": "Insta Payment","prefix": "637","length": 16},</span>
+<span class="s">        "jcb" : {"name": "JCB","prefix": "3528","length": 16},</span>
+<span class="s">        "laser" : {"name": "Laser","prefix": "6304","length": 16},</span>
+<span class="s">        "maestro" : {"name": "Maestro","prefix": "5018","length": 16},</span>
+<span class="s">        "mc" : {"name": "Mastercard","prefix": "51","length": 16},</span>
+<span class="s">        "solo" : {"name": "Solo","prefix": "6334","length": 16},</span>
+<span class="s">        "switch" : {"name": "Switch","prefix": "4903","length": 16},</span>
+<span class="s">        "visa" : {"name": "Visa","prefix": "4","length": 16},</span>
+<span class="s">        "electron" : {"name": "Visa Electron","prefix": "4026","length": 16}</span>
+<span class="s">    }</span>
+<span class="err">}'</span>
+
+<span class="c1"># regular ini property section</span>
+<span class="k">[people]</span>
+<span class="na">name.first</span> <span class="o">=</span> <span class="s">Bhargav</span>
+<span class="na">name.last</span> <span class="o">=</span> <span class="s">Vadher</span>
+</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/bhargav2785/iniparser/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/bhargav2785/iniparser/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/bhargav2785/iniparser"></a> is maintained by <a href="https://github.com/bhargav2785">bhargav2785</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
